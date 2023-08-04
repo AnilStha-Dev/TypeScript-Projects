@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
-  const navigage=useNavigate();
+  const navigate=useNavigate();
   const [lectures, setLectures]=useState([]);
   const getLectures=async()=>{
     const response=await getData("lectures"); 
@@ -35,7 +35,11 @@ const Home = () => {
   };
   const addHandler=(e:any)=>{
     e.preventDefault();
-    navigage("/lectures/add");
+    navigate("/lectures/add");
+  }
+  const editHandler=(e:any,id:any)=>{
+    e.preventDefault();
+    navigate(`/lectures/${id}`);
   }
   return (
     <>
@@ -55,7 +59,7 @@ const Home = () => {
           <Card.Text>Duration : 
             { lecture.duration} hours
           </Card.Text>
-          <Button variant="info" className='me-4'>Edit</Button>
+          <Button variant="info" className='me-4' onClick={(e:any)=>{editHandler(e,lecture._id)}}>Edit</Button>
           <Button variant="danger" onClick={(e:any)=>deleteHandler(e,lecture._id)}>Delete</Button>
         </Card.Body>
       </Card>

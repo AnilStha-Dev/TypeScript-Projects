@@ -2,7 +2,25 @@ import axios from "axios";
 import { errorToast } from "./toastify.service";
 
  const LOCAL_SERVER_URL=import.meta.env.VITE_LOCAL_SERVER_URL
- const token=localStorage.getItem('jwt');   
+ const token=localStorage.getItem('jwt');  
+ 
+ export const postDatawithHeaders=async(url:string,data:any)=>{
+    try {
+        const response=await axios.post(`${LOCAL_SERVER_URL}/${url}`,data,{
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
+
+        });
+        return response.data;
+        
+    } catch (error:any) {
+        errorToast(error.response.data.message);
+        
+    }  
+}
+
+
  export const postData=async(url:string,data:any)=>{
     try {
         const response=await axios.post(`${LOCAL_SERVER_URL}/${url}`,data);
